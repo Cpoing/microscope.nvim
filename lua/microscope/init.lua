@@ -6,7 +6,7 @@ local M = {}
 function M.preview_definition(opts)
 	lsp.get_definition(function(def)
 		if not def then
-			print("No definition found.")
+			vim.cmd([[echohl ErrorMsg | echom "Definition not found" | echohl None]])
 			return
 		end
 		float.open_float(def.filepath, def.line)
