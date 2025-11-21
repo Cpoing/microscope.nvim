@@ -1,6 +1,6 @@
 -- todos:
 --  - make window resizeable
---  - make "Definition not found." red
-vim.keymap.set("n", "<leader>j", function()
+--  - docs
+vim.keymap.set("n", "<leader>r", function()
   require("microscope").preview_definition()
 end)
