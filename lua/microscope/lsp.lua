@@ -1,7 +1,7 @@
 local M = {}
 
 function M.get_definition(callback)
-	local params = vim.lsp.util.make_position_params()
+	local params = vim.lsp.util.make_position_params(0, 'utf-8')
 
 	vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result)
 		if err or not result or vim.tbl_isempty(result) then
