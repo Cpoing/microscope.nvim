@@ -1,3 +1,4 @@
+local float = require("microscope.float")
 local lsp = require("microscope.lsp")
 
 local M = {}
@@ -10,6 +11,7 @@ function M.preview_definition(opts)
 		end
 		print(def.filepath)
 		print(def.line)
+		float.open_float(def.filepath, def.line)
 	end)
 end
 
