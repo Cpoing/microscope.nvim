@@ -9,8 +9,6 @@ function M.preview_definition(opts)
 			print("No definition found.")
 			return
 		end
-		print(def.filepath)
-		print(def.line)
 		float.open_float(def.filepath, def.line)
 	end)
 end
