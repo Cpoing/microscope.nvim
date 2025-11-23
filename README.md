@@ -2,7 +2,7 @@
 
 Quickly look into declarations of functions, variables, and more through a floating window
 
-<img width="1904" height="1206" alt="Screenshot 2025-11-22 at 5 50 40 PM" src="https://github.com/user-attachments/assets/3da36678-4665-4450-ac11-aeae943b7acc" />
+<img width="1920" height="1103" alt="Screenshot 2025-11-22 at 8 25 37 PM" src="https://github.com/user-attachments/assets/4ff37122-81f0-4fdc-9041-3b67379bd0c9" />
 
 # Install
 ```lua
