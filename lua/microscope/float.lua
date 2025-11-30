@@ -1,11 +1,33 @@
 local M = {}
 
+local function git_relative(filepath)
+  local root = vim.fn.systemlist(
+    "git -C " ..
+    vim.fn.fnameescape(vim.fn.fnamemodify(filepath, ":h")) ..
+    " rev-parse --show-toplevel"
+  )[1]
+
+  if not root or root == "" then
+    return filepath:match("([^/]+)$")
+  end
+
+  root = root:gsub("/+$", "")
+  filepath = filepath:gsub("/+$", "")
+
+  if filepath:sub(1, #root) == root then
+    return filepath:sub(#root + 2)
+  end
+
+  return filepath:match("([^/]+)$")
+end
+
 function M.open_float(filepath, line)
   local bufnr = vim.api.nvim_create_buf(true, false)
 
   local width = math.floor(vim.o.columns * 0.5)
   local height = math.floor(vim.o.lines * 0.5)
   local opts = {
+		title = git_relative(filepath),
     relative = "editor",
     width = width,
     height = height,
