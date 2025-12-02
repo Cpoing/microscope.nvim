@@ -8,15 +8,15 @@ Quickly look into or edit declarations of functions, variables, and more through
 # Install
 ```lua
 {
-  "Cpoing/microscope.nvim",
-  config = function()
-    require("microscope").setup({
-      keymaps = {
-        preview_definition = "<leader>r",
-      },
-    })
-  end,
-}
+    "Cpoing/microscope.nvim",
+    cmd = "MicroscopePeek",
+    keys = {
+        { "<leader>r", ":MicroscopePeek<CR>", desc = "Peek definition" },
+    },
+    config = function()
+        require("microscope")
+    end,
+},
 
 ```
 
