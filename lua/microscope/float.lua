@@ -22,12 +22,12 @@ local function git_relative(filepath)
 end
 
 function M.open_float(filepath, line)
-  local bufnr = vim.api.nvim_create_buf(true, false)
+  local scratch = vim.api.nvim_create_buf(false, true)
 
   local width = math.floor(vim.o.columns * 0.5)
   local height = math.floor(vim.o.lines * 0.5)
   local opts = {
-		title = git_relative(filepath),
+    title = git_relative(filepath),
     relative = "editor",
     width = width,
     height = height,
@@ -37,9 +37,30 @@ function M.open_float(filepath, line)
     border = "rounded",
   }
 
-  local win = vim.api.nvim_open_win(bufnr, true, opts)
-  vim.cmd("edit " .. vim.fn.fnameescape(filepath))
+  local win = vim.api.nvim_open_win(scratch, true, opts)
+
+  local bufnr
+  local existing = vim.fn.bufnr(filepath, false)
+
+  if existing ~= -1 then
+    vim.api.nvim_win_set_buf(win, existing)
+    bufnr = existing
+  else
+    vim.cmd("silent noautocmd edit " .. vim.fn.fnameescape(filepath))
+    bufnr = vim.api.nvim_get_current_buf()
+  end
+
   vim.api.nvim_win_set_cursor(win, { line + 1, 0 })
+
+	vim.keymap.set("n", "<Esc>", function()
+		if vim.api.nvim_win_is_valid(win) then
+			vim.api.nvim_win_close(win, true)
+		end
+
+		if vim.api.nvim_buf_is_valid(bufnr) then
+			pcall(vim.keymap.del, "n", "<Esc>", { buffer = bufnr })
+		end
+	end, { buffer = bufnr, nowait = true })
 
   if vim.startswith(filepath, "/Library") then
     vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
