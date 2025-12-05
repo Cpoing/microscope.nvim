@@ -48,6 +48,8 @@ function M.open_float(filepath, line)
   else
     vim.cmd("silent noautocmd edit " .. vim.fn.fnameescape(filepath))
     bufnr = vim.api.nvim_get_current_buf()
+
+		vim.bo[bufnr].filetype = vim.filetype.match({ filename = filepath }) or ""
   end
 
   vim.api.nvim_win_set_cursor(win, { line + 1, 0 })
